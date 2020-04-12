@@ -28,20 +28,19 @@ stream_socket.bind("tcp://*:%d" % system_config.communication.sensorPort)
 print(sd.query_devices())
 
 #istream.close()
-istream = sd.InputStream(samplerate=system_config.sound.sampleRate, device=9, channels=1, callback=audio_callback)
-
+istream = sd.InputStream(samplerate=system_config.sound.sampleRate, device=None, channels=1, callback=audio_callback)
+istream.start()
 
 dummy_data = np.zeros((2000), dtype=np.uint16)
 timestamp = np.zeros((1), dtype=np.float64)
-#dummy_data[0] = 1234
-#dummy_data[1] = 5678
 while True:
+    data = q.get()
     # Create an array of 16 bit random data
     timestamp[0] = time.time()
     print("Sending message")
-    stream_socket.send(SOUND_TOPIC + b' ' + timestamp.tobytes() + dummy_data.tobytes())
+    stream_socket.send(SOUND_TOPIC + b' ' + timestamp.tobytes() + data.tobytes())
     print(b'timestamp')
-    time.sleep(1)
+    #time.sleep(1)
 
 
 
