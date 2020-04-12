@@ -1,0 +1,43 @@
+syntax = "proto2";
+
+package knowmeai;
+
+message systemConfig {
+  enum colorType {
+    RGB = 0;
+    GREY = 1;
+  }
+  message soundCnf {
+    required int32 sampleRate = 1;
+    required int32 samples = 2;
+  }
+  required soundCnf sound = 1;
+  message skeletonCnf {
+    required int32 noOfPoints = 1;
+    required int32 frames = 2;
+  }
+  required skeletonCnf skeleton = 2;
+  message faceCnf {
+    required int32 width = 1;
+    required int32 height = 2;
+    required colorType color = 3;
+    required int32 frames = 4;
+  }
+  required faceCnf face = 3;
+  message communicationCnf {
+    required string sensorIp = 1;
+    required string soundIp = 2;
+    required string faceIp = 3;
+    required string gestureIp = 4;
+    required string syncIp = 5;
+    required string compoundIp = 6;
+    required int32 sensorPort = 7;
+    required int32 soundPort = 8;
+    required int32 facePort = 9;
+    required int32 gesturePort = 10;
+    required int32 storePort = 11;
+    required int32 syncPort = 12;
+    required int32 compoundPort = 13;
+  }
+  required communicationCnf communication = 4;
+}
