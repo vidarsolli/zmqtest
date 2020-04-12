@@ -13,9 +13,9 @@ last_timestamp = time.time()
 
 while True:
     timestamp, samples = get_sound_stream(stream_socket)
-    print("Length of samples: ", len(samples))
-    print("Time interval: ", timestamp - last_timestamp)
+    #print("Length of samples: ", len(samples))
+    #print("Time interval: ", timestamp - last_timestamp)
     last_timestamp = timestamp
-    print("Message received")
+    #print("Message received")
 
 exit()
