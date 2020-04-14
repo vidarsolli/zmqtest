@@ -30,7 +30,6 @@ def sound_buffer_append(data):
     else:
         buffer[buffer_idx][data_idx:(data_idx+size)] = list(data)
         data_idx = data_idx + size
-    print (size, buffer_idx, data_idx)
 
 def sound_buffer_save():
     global buffer_idx
@@ -42,10 +41,7 @@ def sound_buffer_save():
         a = np.append(a, buffer[idx])
         idx = (idx + 1)%BUFFER_LENGTH
     #a = np.reshape(a, (int(a.shape[0]/cp["audio_channels"]), cp["audio_channels"]))
-    t = datetime.now()
-    filenameExt = str(t.year) + "-" + str(t.month) + "-" + str(t.day) + "-" + str(t.hour) + "-" + str(t.minute) + "-" + \
-                  str(t.second)
-    filename = filenameExt + ".wav"
+    filename = datetime.now().strftime("%Y-%m-%d_%H_%M_%S") + ".wav"
     sfile = sf.SoundFile(filename, mode='x', samplerate=8000, channels=1, subtype="PCM_24")
 
     sfile.write(a)
@@ -82,12 +78,11 @@ timestamp = np.zeros((1), dtype=np.float64)
 last_timestamp = time.time()
 while True:
     data = q.get()
-    # Create an array of 16 bit random data
     timestamp[0] = time.time()
     stream_socket.send(SOUND_TOPIC + b' ' + timestamp.tobytes() + data.tobytes())
     if (timestamp[0] - last_timestamp) > 10:
         print("saving sound_buffer")
-        sound_buffer_save()
+        #sound_buffer_save()
         last_timestamp = timestamp[0]
     #time.sleep(1)
 

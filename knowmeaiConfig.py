@@ -5,7 +5,7 @@ import time
 import KnowMeAiConfig_pb2
 
 configMsg = KnowMeAiConfig_pb2.systemConfig()
-configMsg.sound.sampleRate = 8000
+configMsg.sound.sampleRate = 16000
 configMsg.sound.samples = 4000
 configMsg.skeleton.noOfPoints = 40
 configMsg.skeleton.frames = 15
