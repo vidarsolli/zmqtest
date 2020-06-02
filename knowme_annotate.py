@@ -37,6 +37,7 @@ while True:
     abs_max = 2 ** (i.bits - 1)
     offset = i.min + abs_max
     data = (samples * abs_max + offset).clip(i.min, i.max).astype(np.int16)
+    print(data.shape)
     decoder.process_raw(data, False, False)
     if decoder.hyp() != None:
         print ([(seg.word, seg.prob, seg.start_frame, seg.end_frame) for seg in decoder.seg()])

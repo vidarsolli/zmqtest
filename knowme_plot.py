@@ -51,8 +51,14 @@ def update_plot(frame):
             # check for a message, this will not block
             raw_message = sub_socket.recv(flags=zmq.NOBLOCK)
             samples = np.frombuffer(raw_message, dtype=np.float32, offset=14, count=-1)
-            data = np.array(samples)
+            data = np.asarray(samples)
             data = np.reshape(data, (len(data), 1))
+
+            i = np.iinfo(np.int16)
+            abs_max = 2 ** (i.bits - 1)
+            offset = i.min + abs_max
+            data = (data * abs_max + offset).clip(i.min, i.max).astype(np.int16)
+
         except zmq.Again as e:
             break
         shift = len(data)
@@ -86,7 +92,7 @@ sound_class = "No"
 fig, ax = plt.subplots()
 lines = ax.plot(plotdata)
 
-ax.axis((0, len(plotdata), -1, 1))
+ax.axis((0, len(plotdata), -32000, 32000))
 ax.set_yticks([0])
 ax.yaxis.grid(True)
 ax.tick_params(bottom='off', top='off', labelbottom='off',

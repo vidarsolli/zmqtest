@@ -71,7 +71,7 @@ stream_socket.bind("tcp://*:%d" % system_config.communication.sensorPort)
 print(sd.query_devices())
 
 #istream.close()
-istream = sd.InputStream(samplerate=system_config.sound.sampleRate, device=None, channels=1, callback=audio_callback)
+istream = sd.InputStream(samplerate=system_config.sound.sampleRate, blocksize= 1024, device=None, channels=1, callback=audio_callback)
 istream.start()
 
 timestamp = np.zeros((1), dtype=np.float64)
